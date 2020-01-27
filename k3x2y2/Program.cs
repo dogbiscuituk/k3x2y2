@@ -9,13 +9,8 @@
     {
         static void Main()
         {
-            Test();
-        }
-
-        private static void Test()
-        {
             Console.OutputEncoding = Encoding.UTF8;
-            for (var n = 0UL; n <= 5; n++)
+            for (var n = 0UL; n <= 10; n++)
             {
                 var factors = Primes.Factorize(n);
                 var k = n * n;
