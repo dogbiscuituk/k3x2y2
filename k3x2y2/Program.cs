@@ -15,17 +15,13 @@
         private static void Test()
         {
             Console.OutputEncoding = Encoding.UTF8;
-            for (var n = 2UL; n <= 1625; n++)
+            for (var n = 0UL; n <= 5; n++)
             {
                 var factors = Primes.Factorize(n);
                 var k = n * n;
-                checked
-                {
-                    Console.WriteLine($"n = {n} = {factors.AsString()}, k = n² = {k}, k³ = {k * k * k}:");
-                }
-                Console.WriteLine();
-                Distribute(1, 1, factors);
-                Console.WriteLine();
+                Console.WriteLine($"\nn = {n} = {factors.AsString()}, k = n² = {k}:\n");
+                var a = n < 2 ? n : 1;
+                Distribute(a, a, factors);
             }
             Console.WriteLine("Press the 'Any' key to continue...");
             Console.ReadKey();
@@ -35,9 +31,9 @@
         {
             if (factors.Any())
             {
-                var term = factors.First();
-                var prime = term.Item1;
-                var power = 3 * term.Item2;
+                var factor = factors.First();
+                var prime = factor.Item1;
+                var power = 3 * factor.Item2;
                 for (var i = 0; i < power; i++)
                     x *= prime;
                 for (var i = 0; i <= power; i++)
@@ -51,10 +47,7 @@
                 }
             }
             else
-                checked
-                {
-                    Console.WriteLine($"  x = {x}, y = {y}, x²y² = {x * x * y * y}");
-                }
+                Console.WriteLine($"  x = {x}, y = {y}.");
         }
     }
 }

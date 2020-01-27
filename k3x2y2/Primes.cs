@@ -36,7 +36,6 @@
             {
                 case 0:
                 case 1:
-                    yield return (n, 1);
                     yield break;
             }
             foreach (var p in List())
