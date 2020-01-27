@@ -13,9 +13,8 @@
             for (var n = 0UL; n <= 10; n++)
             {
                 var factors = Primes.Factorize(n);
-                var k = n * n;
-                Console.WriteLine($"\nn = {n} = {factors.AsString()}, k = n² = {k}:\n");
-                var a = n < 2 ? n : 1;
+                Console.WriteLine($"\nn = {n}, k = n² = {n * n}:\n");
+                var a = n == 0 ? 0UL : 1;
                 Distribute(a, a, factors);
             }
             Console.WriteLine("Press the 'Any' key to continue...");

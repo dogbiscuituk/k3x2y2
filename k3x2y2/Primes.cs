@@ -67,13 +67,7 @@
             return true;
         }
 
-        public static string AsString(this IEnumerable<(ulong, int)> factors)
-        {
-            if (!factors.Any())
-                return string.Empty;
-            return factors
-                .Select(p => $"{p.Item1}{p.Item2.ToSuperscript()}")
-                .Aggregate((p, q) => $"{p}{q}");
-        }
+        public static string AsString(this IEnumerable<(ulong, int)> factors) =>
+            string.Concat(factors.Select(p => $"{p.Item1}{p.Item2.ToSuperscript()}"));
     }
 }
