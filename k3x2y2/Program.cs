@@ -17,7 +17,7 @@
             Console.OutputEncoding = Encoding.UTF8;
             for (var n = 2UL; n <= 1625; n++)
             {
-                var factors = Primes.Factorize(n).Select(f => (f.Item1, f.Item2));
+                var factors = Primes.Factorize(n);
                 var k = n * n;
                 checked
                 {
