@@ -17,12 +17,12 @@
         /// <returns></returns>
         public static IEnumerable<ulong> List()
         {
-            foreach (var p in list)
+            foreach (var p in _List)
                 yield return p;
-            for (var p = hwm; p < int.MaxValue; )
+            for (var p = _HWM; p < int.MaxValue; )
                 if (IsPrime(++p))
                 {
-                    list.Add(hwm = p);
+                    _List.Add(_HWM = p);
                     yield return p;
                 }
         }
@@ -66,14 +66,14 @@
             }
         }
 
-        private static ulong hwm = 1; // High Water Mark
-        private static readonly List<ulong> list = new List<ulong>();
+        private static ulong _HWM = 1; // High Water Mark
+        private static readonly List<ulong> _List = new List<ulong>();
 
         // Warning: not a general purpose method! Works only in this context.
         private static bool IsPrime(ulong n)
         {
             var s = Math.Sqrt(n);
-            foreach (var p in list)
+            foreach (var p in _List)
                 if (p > s)
                     return true;
                 else if ((n % p) == 0)
