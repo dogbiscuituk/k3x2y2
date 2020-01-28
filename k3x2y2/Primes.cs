@@ -43,7 +43,7 @@
         /// <param name="n">The target number to factorize.</param>
         /// <returns>An IEnumerable of tuples, where the first item in the tuple is a prime, 
         /// and the second item is the power of that prime in the target number.</returns>
-        public static IEnumerable<(ulong, int)> Factorize(ulong n)
+        public static IEnumerable<(ulong, int)> Factorize(this ulong n)
         {
             switch (n) // Handle cases with no prime factors.
             {

@@ -40,12 +40,7 @@
             Console.ReadKey();
         }
 
-        private static void MethodOne(ulong n)
-        {
-            var factors = Primes.Factorize(n);
-            var start = n == 0 ? n : 1;
-            Distribute(start, start, factors);
-        }
+        private static void MethodOne(ulong n) => Distribute(1, 1, n.Factorize());
 
         private static void MethodTwo(ulong n)
         {
