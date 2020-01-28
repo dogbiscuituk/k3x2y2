@@ -19,11 +19,10 @@
         {
             foreach (var p in list)
                 yield return p;
-            for (var p = hwm + 1; p < int.MaxValue; p++)
-                if (IsPrime(p))
+            for (var p = hwm; p < int.MaxValue; )
+                if (IsPrime(++p))
                 {
-                    hwm = p;
-                    list.Add(p);
+                    list.Add(hwm = p);
                     yield return p;
                 }
         }
