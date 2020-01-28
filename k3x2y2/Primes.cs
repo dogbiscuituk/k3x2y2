@@ -2,8 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using Utility;
 
     /// <summary>
     /// Utility class for working with primes.
@@ -26,16 +24,6 @@
                     yield return p;
                 }
         }
-
-        /// <summary>
-        /// Convert an integer's prime factorization to a string using Unicode superscripts.
-        /// </summary>
-        /// <param name="factors">An IEnumerable of tuples, 
-        /// where the first item in the tuple is a prime, 
-        /// and the second item is the power of that prime.</param>
-        /// <returns></returns>
-        public static string AsString(this IEnumerable<(ulong, int)> factors) =>
-            string.Concat(factors.Select(p => $"{p.Item1}{p.Item2.ToSuperscript()}"));
 
         /// <summary>
         /// Compute the prime factorization of an unsigned long integer.
