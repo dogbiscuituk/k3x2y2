@@ -9,18 +9,18 @@
     public static class Primes
     {
         /// <summary>
-        /// Use Eratosthenes' Sieve to return the list of primes.
+        /// Use Eratosthenes' Sieve to return primes.
         /// The set of primes so far consumed is cached.
         /// </summary>
-        /// <returns></returns>
-        public static IEnumerable<ulong> List()
+        /// <returns>An IEnumerable<ulong> of primes.</returns>
+        public static IEnumerable<ulong> GetPrimes()
         {
-            foreach (var p in _List)
+            foreach (var p in _Primes)
                 yield return p;
-            for (var p = _HWM; p < int.MaxValue; )
-                if (IsPrime(++p))
+            for (var p = _HighWaterMark; p < int.MaxValue; )
+            if (CanAdd(++p))
                 {
-                    _List.Add(_HWM = p);
+                    _Primes.Add(_HighWaterMark = p);
                     yield return p;
                 }
         }
@@ -30,7 +30,7 @@
         /// </summary>
         /// <param name="n">The target number to factorize.</param>
         /// <returns>An IEnumerable of tuples, where the first item in the tuple is a prime, 
-        /// and the second item is the power of that prime in the target number.</returns>
+        /// and the second is the power of that prime in the target number's factorization.</returns>
         public static IEnumerable<(ulong, int)> Factorize(this ulong n)
         {
             switch (n) // Handle cases with no prime factors.
@@ -39,7 +39,7 @@
                 case 1:
                     yield break;
             }
-            foreach (var p in List())
+            foreach (var p in GetPrimes())
             {
                 var i = 0;
                 while (n > 1 && (n % p) == 0)
@@ -54,17 +54,16 @@
             }
         }
 
-        private static ulong _HWM = 1; // High Water Mark
-        private static readonly List<ulong> _List = new List<ulong>();
+        private static ulong _HighWaterMark = 1;
+        private static readonly List<ulong> _Primes = new List<ulong>();
 
-        // Warning: not a general purpose method! Works only in this context.
-        private static bool IsPrime(ulong n)
+        private static bool CanAdd(ulong p)
         {
-            var s = Math.Sqrt(n);
-            foreach (var p in _List)
-                if (p > s)
+            var r = Math.Sqrt(p);
+            foreach (var q in _Primes)
+                if (q > r)
                     return true;
-                else if ((n % p) == 0)
+                else if ((p % q) == 0)
                     return false;
             return true;
         }

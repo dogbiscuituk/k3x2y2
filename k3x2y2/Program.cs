@@ -52,12 +52,12 @@
             var factor = factors.First();
             var prime = factor.Item1;
             var power = checked(3 * factor.Item2); // Because k³.
-            for (var i = 0; i <= power; i++)
+            for (var i = 0; i < power; i++)
                 checked { x *= prime; }
             for (var i = 0; i <= power; i++)
             {
-                x /= prime;
                 MethodOne(x, y, factors.Skip(1));
+                x /= prime;
                 y *= prime;
             }
         }
