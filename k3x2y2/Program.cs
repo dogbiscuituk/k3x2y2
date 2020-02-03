@@ -9,7 +9,7 @@
     {
         private const ulong // First & last values of n.
             _First = 1,
-            _Last = 10;
+            _Last = 100;
 
         private static readonly List<(ulong, ulong)> _XY = new List<(ulong, ulong)>();
 
@@ -23,7 +23,7 @@
                 Console.WriteLine($"\nMethod {method}.");
                 for (var n = _First; n <= _Last; n++)
                 {
-                    Console.WriteLine($"\nn = {n}; k = n² = {checked(n * n)}; |x|,|y| =\n");
+                    Console.WriteLine($"\nn = {n}; k = n² = {checked(n * n)}; |x| * |y| =\n");
                     _XY.Clear();
                     switch (method)
                     {
@@ -35,7 +35,7 @@
                             break;
                     }
                     foreach (var xy in _XY.OrderBy(r => r.Item1))
-                        Console.WriteLine($"  {xy.Item1},{xy.Item2}");
+                        Console.WriteLine($"  {xy.Item1:n0} * {xy.Item2:n0}");
                 }
             }
             Console.WriteLine("\nPress the 'Any' key to continue...");
