@@ -9,14 +9,14 @@
     {
         private const ulong // First & last values of n.
             _First = 0,
-            _Last = 100;
+            _Last = 2;
 
         private static readonly List<(ulong, ulong)> _XY = new List<(ulong, ulong)>();
 
         static void Main()
         {
             Console.OutputEncoding = Encoding.UTF8;
-            Console.WriteLine("Integer solutions of k³ = x²y² = (xy)² exist iff k is a square.");
+            Console.WriteLine("Integer solutions of k³ = x²y² = (xy)² exist iff k is square.");
             Console.WriteLine("Let k=n², where n is any integer.");
             for (var method = 1; method <= 2; method++)
             {
@@ -25,17 +25,19 @@
                 {
                     var factors = n.Factorize();
                     var sayFactors = factors.AsString(n);
-                    Console.WriteLine($"\nn = {n} = ({sayFactors}); k = n² = {checked(n * n)}; |x| * |y| =\n");
+                    Console.WriteLine($"\nn = {n} = ({sayFactors}), k = n² = {checked(n * n)}.\n");
+                    if (n == 0)
+                        continue;
                     _XY.Clear();
                     switch (method)
-                    {
-                        case 1:
-                            MethodOne(1, 1, factors);
-                            break;
-                        case 2:
-                            MethodTwo(n);
-                            break;
-                    }
+                        {
+                            case 1:
+                                MethodOne(1, 1, factors);
+                                break;
+                            case 2:
+                                MethodTwo(n);
+                                break;
+                        }
                     foreach (var xy in _XY.OrderBy(r => r.Item1))
                         Console.WriteLine($"  {xy.Item1} * {xy.Item2}");
                 }
@@ -44,7 +46,7 @@
             Console.ReadKey();
         }
 
-        private static void MethodOne(ulong x, ulong y, IEnumerable<(ulong, int)> factors)
+        private static void MethodOne(ulong x, ulong y, IEnumerable<(ulong, uint)> factors)
         {
             if (!factors.Any())
             {

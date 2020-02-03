@@ -19,7 +19,7 @@
         {
             foreach (var p in _Primes)
                 yield return p;
-            for (var p = _HighWaterMark; p < int.MaxValue; )
+            for (var p = _HighWaterMark; p < ulong.MaxValue; )
             if (CanAdd(++p))
                 {
                     _Primes.Add(_HighWaterMark = p);
@@ -33,11 +33,11 @@
         /// <param name="n">The target number to factorize.</param>
         /// <returns>An IEnumerable of tuples, where the first item in the tuple is a prime, 
         /// and the second is the power of that prime in the target number's factorization.</returns>
-        public static IEnumerable<(ulong, int)> Factorize(this ulong n)
+        public static IEnumerable<(ulong, uint)> Factorize(this ulong n)
         {
             foreach (var p in GetPrimes())
             {
-                var i = 0;
+                var i = 0U;
                 while (n > 1 && (n % p) == 0)
                 {
                     n /= p;
@@ -57,7 +57,7 @@
         /// <param name="n">Optional. The original value of the factorized number.
         /// Useful in cases where no prime factors exist, i.e. where n < 2.</param>
         /// <returns>The string representation of the factorization.</returns>
-        public static string AsString(this IEnumerable<(ulong, int)> factors, ulong n = 0) =>
+        public static string AsString(this IEnumerable<(ulong, uint)> factors, ulong n = 0) =>
             factors.Any() ? string.Concat(factors.Select(p => $"{p.Item1}{p.Item2.ToSuper()}")) : $"{n}";
 
         private static ulong _HighWaterMark = 1;

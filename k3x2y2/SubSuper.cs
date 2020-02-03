@@ -17,10 +17,11 @@
         public static string FromSuper(this string s) => Transcribe(s, Super, Norm);
         public static string SubToSuper(this string s) => Transcribe(s, Sub, Super);
         public static string SuperToSub(this string s) => Transcribe(s, Super, Sub);
-        public static string ToSub(this int n) => n.ToString().ToSub();
         public static string ToSub(this string s) => Transcribe(s, Norm, Sub);
-        public static string ToSuper(this int n) => n.ToString().ToSuper();
         public static string ToSuper(this string s) => Transcribe(s, Norm, Super);
+
+        public static string ToSub<T>(this T n) => n.ToString().ToSub();
+        public static string ToSuper<T>(this T n) => n.ToString().ToSuper();
 
         public static string Transcribe(this string s, string source, string target)
         {
