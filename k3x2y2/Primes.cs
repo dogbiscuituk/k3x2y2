@@ -2,6 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using Utility;
 
     /// <summary>
     /// Utility class for working with primes.
@@ -33,12 +35,6 @@
         /// and the second is the power of that prime in the target number's factorization.</returns>
         public static IEnumerable<(ulong, int)> Factorize(this ulong n)
         {
-            switch (n) // Handle cases with no prime factors.
-            {
-                case 0:
-                case 1:
-                    yield break;
-            }
             foreach (var p in GetPrimes())
             {
                 var i = 0;
@@ -53,6 +49,16 @@
                     break;
             }
         }
+
+        /// <summary>
+        /// Display the given factorization as a product of prime powers.
+        /// </summary>
+        /// <param name="factors">The factorization.</param>
+        /// <param name="n">Optional. The original value of the factorized number.
+        /// Useful in cases where no prime factors exist, i.e. where n < 2.</param>
+        /// <returns>The string representation of the factorization.</returns>
+        public static string AsString(this IEnumerable<(ulong, int)> factors, ulong n = 0) =>
+            factors.Any() ? string.Concat(factors.Select(p => $"{p.Item1}{p.Item2.ToSuper()}")) : $"{n}";
 
         private static ulong _HighWaterMark = 1;
         private static readonly List<ulong> _Primes = new List<ulong>();
