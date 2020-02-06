@@ -5,6 +5,9 @@
     using System.Linq;
     using System.Text;
 
+    /// <summary>
+    /// https://www.codewars.com/kata/5da1df6d8b0f6c0026e6d58d/clojure
+    /// </summary>
     class Program
     {
         private const ulong // First & last values of n.
@@ -15,6 +18,8 @@
 
         static void Main()
         {
+            // Largest ulong whose cube is still in the ulong range (2642245 for 64 bit integers).
+            var kMax = (ulong)Math.Pow(ulong.MaxValue, 1.0 / 3);
             Say("Integer solutions of k³ = x²y² = (xy)² exist iff k is square.");
             Say("Let k=n², where n is any integer.");
             for (var method = 1; method <= 2; method++)
@@ -37,9 +42,13 @@
                         }
                     }
                     var sayFactors = factors.AsString(n);
-                    Say($"\n  n = {n} = ({sayFactors}); k = n² = {checked(n * n)}; {_XY.Count} solution(s) |x|, |y|.\n");
+                    var k = checked(n * n);
+                    Say($"\n  n = {n} = ({sayFactors}), k = n² = {factors.Power(2).AsString()} = {k}.");
+                    if (k <= kMax)
+                        Say($"  k³ = x²y² = (xy)² = {factors.Power(6).AsString()} = {k * k * k}.");
+                    Say($"  {_XY.Count} solution(s) |x|:|y|\n");
                     foreach (var xy in _XY.OrderBy(r => r.Item1))
-                        Say($"    {xy.Item1}, {xy.Item2}");
+                        Say($"    {xy.Item1}:{xy.Item2}");
                 }
             }
             Console.WriteLine("\nPress the 'Any' key to continue...");
