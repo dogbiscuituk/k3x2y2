@@ -9,27 +9,24 @@
     {
         private const ulong // First & last values of n.
             _First = 0,
-            _Last = 2;
+            _Last = 210;
 
         private static readonly List<(ulong, ulong)> _XY = new List<(ulong, ulong)>();
 
         static void Main()
         {
-            Console.OutputEncoding = Encoding.UTF8;
-            Console.WriteLine("Integer solutions of k³ = x²y² = (xy)² exist iff k is square.");
-            Console.WriteLine("Let k=n², where n is any integer.");
+            Say("Integer solutions of k³ = x²y² = (xy)² exist iff k is square.");
+            Say("Let k=n², where n is any integer.");
             for (var method = 1; method <= 2; method++)
             {
-                Console.WriteLine($"\nMethod {method}.");
+                Say($"\nMethod {method}:");
                 for (var n = _First; n <= _Last; n++)
                 {
-                    var factors = n.Factorize();
-                    var sayFactors = factors.AsString(n);
-                    Console.WriteLine($"\nn = {n} = ({sayFactors}), k = n² = {checked(n * n)}.\n");
-                    if (n == 0)
-                        continue;
                     _XY.Clear();
-                    switch (method)
+                    var factors = n.Factorize();
+                    if (n > 0)
+                    {
+                        switch (method)
                         {
                             case 1:
                                 MethodOne(1, 1, factors);
@@ -38,8 +35,11 @@
                                 MethodTwo(n);
                                 break;
                         }
+                    }
+                    var sayFactors = factors.AsString(n);
+                    Say($"\n  n = {n} = ({sayFactors}); k = n² = {checked(n * n)}; {_XY.Count} solution(s) |x|, |y|.\n");
                     foreach (var xy in _XY.OrderBy(r => r.Item1))
-                        Console.WriteLine($"  {xy.Item1} * {xy.Item2}");
+                        Say($"    {xy.Item1}, {xy.Item2}");
                 }
             }
             Console.WriteLine("\nPress the 'Any' key to continue...");
@@ -78,6 +78,13 @@
                     if (x != y)
                         _XY.Add((y, x));
                 }
+        }
+
+        private static void Say(string s)
+        {
+            System.Diagnostics.Debug.WriteLine(s);
+            Console.OutputEncoding = Encoding.UTF8;
+            Console.WriteLine(s);
         }
     }
 }
